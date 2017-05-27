@@ -112,6 +112,8 @@ public class FrontControllerServlet extends HttpServlet {
 		commands.put("ValidaEmail", new ValidaEmail());
 		commands.put("ValidaBanco", new ValidaBanco());
 		commands.put("ValidaConfig", new ValidaConfig());
+		
+		commands.put("RelacaoAcessoFalhas", new RelaçãoAcessoFalhasCommand());
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)

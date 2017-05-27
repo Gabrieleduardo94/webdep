@@ -44,7 +44,7 @@ public class ValidaHttpReportCommand implements Command {
 			request.getRequestDispatcher("HTTPreport.jsp").forward(request, response);
 			return;
 		} else {
-			//Lógica para a busca dos filtros...
+			//LÃ³gica para a busca dos filtros...
 		}
 		
 	}

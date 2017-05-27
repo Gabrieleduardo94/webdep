@@ -36,7 +36,7 @@ public class AccessProfileReportCommand implements Command {
 		
 		boolean dataIn = true;
 		/*
-		 * Validação dos campos
+		 * ValidaÃ§Ã£o dos campos
 		 */
 		try {
 			idate = LocalDate.parse(request.getParameter("initialDate"));
