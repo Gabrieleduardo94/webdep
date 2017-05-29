@@ -20,7 +20,7 @@ import javax.persistence.OneToMany;
  * @since 0.1
  */
 @Entity
-public class Sistema implements Serializable{
+public class Sistema implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
