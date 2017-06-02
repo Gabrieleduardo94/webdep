@@ -7,10 +7,15 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.cefetrj.webdep.model.dao.PadraoDAO;
-import br.cefetrj.webdep.model.dao.VersaoDAO;
+import br.cefetrj.webdep.services.PadraoURLServices;
 import br.cefetrj.webdep.services.RelacaoAcessoFalhasService;
+import br.cefetrj.webdep.services.VersionServices;
 
+/**
+ * Command para validar os dados passados pelo HTTPreport.jsp
+ * @author vinicius
+ *
+ */
 public class RelacaoAcessoFalhasCommand implements Command {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -27,13 +32,17 @@ public class RelacaoAcessoFalhasCommand implements Command {
 		httpOK = request.getParameter("httpOK");
 		
 		//Validação dos campos
-		if(!PadraoDAO.existePadrao(padrao)){
-			msgKeys.add("Padrão inválido");
-		}
-		if(!VersaoDAO.existeVersao(versao)){
-			msgKeys.add("Versão inválida");
+		if(padrao.length() != 0 && padrao != null){
+			if(!PadraoURLServices.verificaSeExiste(padrao)){
+				msgKeys.add("Padrão inválido");
+			}
 		}
 		
+		if(padrao.length() != 0 && versao != null){
+			if(!VersionServices.verificaSeExiste(versao)){
+				msgKeys.add("Versão inválida");
+			}
+		}
 		
 		if(msgKeys.toString() == ""){
 			RelacaoAcessoFalhasService.buscarGrafico(padrao, versao, httpErro, httpOK);

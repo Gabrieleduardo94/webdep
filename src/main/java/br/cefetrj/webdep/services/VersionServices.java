@@ -112,4 +112,15 @@ public class VersionServices {
 			return null;
 		}
 	}
+	
+	/**
+	 * Faz uma seleção na tabela versão com o parametro recebido, retorna true se existir na tabela ou false caso não exista.
+	 * @param versao
+	 * @return boolean
+	 */
+	public static boolean verificaSeExiste(String versao){
+		Query query = PersistenceManager.getInstance().createQuery("SELECT v from VERSAO as v WHERE " + versao + " = v.nome");
+		List<Versao> q = query.getResultList();
+		return q.isEmpty();
+	}
 }

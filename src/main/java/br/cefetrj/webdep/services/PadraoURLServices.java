@@ -26,6 +26,17 @@ public class PadraoURLServices {
 
 	}
 	
+	/**
+	 * Faz uma seleção na tabela padrão com o parametro recebido, retorna true se existir na tabela ou false caso não exista.
+	 * @param padrao
+	 * @return boolean
+	 */
+	public static boolean verificaSeExiste(String padrao){
+		Query query = PersistenceManager.getInstance().createQuery("SELECT p from PADRAO p WHERE " + padrao + " = p.nome");
+		List<PadraoURL> q = query.getResultList();
+		return q.isEmpty();
+	}
+	
 	public static void insertPadraoURL(PadraoURL p) {
 		PersistenceManager pm = PersistenceManager.getInstance();
 
