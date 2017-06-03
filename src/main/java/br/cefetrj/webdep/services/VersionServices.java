@@ -10,6 +10,7 @@ import javax.persistence.Query;
 import org.hsqldb.persist.PersistentStoreCollectionSession;
 
 import br.cefetrj.webdep.model.dao.GenericDAO;
+import br.cefetrj.webdep.model.entity.PadraoURL;
 import br.cefetrj.webdep.model.entity.RegistroLogAcesso;
 import br.cefetrj.webdep.model.entity.Sistema;
 import br.cefetrj.webdep.model.entity.Versao;
@@ -114,13 +115,17 @@ public class VersionServices {
 	}
 	
 	/**
-	 * Faz uma seleção na tabela versão com o parametro recebido, retorna true se existir na tabela ou false caso não exista.
-	 * @param versao
-	 * @return boolean
+	 * Recebe o nome de um padrão de URL e retorna um objeto do tipo PadraoURL caso ele exista ou null
+	 * @param padrao
+	 * @return PadraoURL
 	 */
-	public static boolean verificaSeExiste(String versao){
-		Query query = PersistenceManager.getInstance().createQuery("SELECT v from VERSAO as v WHERE " + versao + " = v.nome");
-		List<Versao> q = query.getResultList();
-		return q.isEmpty();
+	public static Versao retornaPeloNome(String versao){
+		Query query = PersistenceManager.getInstance().createQuery("SELECT v from VERSAO v WHERE " + versao + " = v.nome").setMaxResults(1);
+		if(query.getMaxResults() == 0){
+			return null;
+		}
+		else{
+			return (Versao) query.getSingleResult();
+		}
 	}
 }
