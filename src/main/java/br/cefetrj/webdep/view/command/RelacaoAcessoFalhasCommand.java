@@ -7,8 +7,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.cefetrj.webdep.model.entity.PadraoURL;
+import br.cefetrj.webdep.model.entity.Versao;
 import br.cefetrj.webdep.services.PadraoURLServices;
-import br.cefetrj.webdep.services.RelacaoAcessoFalhasService;
+import br.cefetrj.webdep.services.RelacaoAcessoFalhasServices;
 import br.cefetrj.webdep.services.VersionServices;
 
 /**
@@ -32,20 +34,18 @@ public class RelacaoAcessoFalhasCommand implements Command {
 		httpOK = request.getParameter("httpOK");
 		
 		//Validação dos campos
-		if(padrao.length() != 0 && padrao != null){
-			if(!PadraoURLServices.verificaSeExiste(padrao)){
-				msgKeys.add("Padrão inválido");
-			}
+		PadraoURL p = PadraoURLServices.retornaPeloNome(padrao);
+		Versao v = VersionServices.retornaPeloNome(versao);
+		if(p == null){
+			msgKeys.add("Padrão inválido");
 		}
 		
-		if(padrao.length() != 0 && versao != null){
-			if(!VersionServices.verificaSeExiste(versao)){
-				msgKeys.add("Versão inválida");
-			}
+		if(v == null){
+			msgKeys.add("Padrão inválido");
 		}
 		
 		if(msgKeys.toString() == ""){
-			RelacaoAcessoFalhasService.buscarGrafico(padrao, versao, httpErro, httpOK);
+			RelacaoAcessoFalhasServices.buscarGrafico(p, v, httpErro, httpOK);
 		}
 		else{
 			request.setAttribute("msg", msgKeys.toString());
