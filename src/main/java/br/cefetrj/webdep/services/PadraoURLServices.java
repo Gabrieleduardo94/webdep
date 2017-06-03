@@ -27,14 +27,18 @@ public class PadraoURLServices {
 	}
 	
 	/**
-	 * Faz uma seleção na tabela padrão com o parametro recebido, retorna true se existir na tabela ou false caso não exista.
+	 * Recebe o nome de um padrão de URL e retorna um objeto do tipo PadraoURL caso ele exista ou null
 	 * @param padrao
-	 * @return boolean
+	 * @return PadraoURL
 	 */
-	public static boolean verificaSeExiste(String padrao){
-		Query query = PersistenceManager.getInstance().createQuery("SELECT p from PADRAO p WHERE " + padrao + " = p.nome");
-		List<PadraoURL> q = query.getResultList();
-		return q.isEmpty();
+	public static PadraoURL retornaPeloNome(String padrao){
+		Query query = PersistenceManager.getInstance().createQuery("SELECT p from PADRAO p WHERE " + padrao + " = p.nome").setMaxResults(1);
+		if(query.getMaxResults() == 0){
+			return null;
+		}
+		else{
+			return (PadraoURL) query.getSingleResult();
+		}
 	}
 	
 	public static void insertPadraoURL(PadraoURL p) {
