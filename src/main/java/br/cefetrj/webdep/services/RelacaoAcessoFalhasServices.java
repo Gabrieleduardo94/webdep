@@ -21,35 +21,24 @@ public class RelacaoAcessoFalhasServices {
 	 */
 	public static void buscarGrafico(PadraoURL padrao, Versao versao, String httpErro, String httpOk){
 		int[] dados = new int[2];
+		Long sistemaId = versao.getSistema().getId();
 		Query q;
-		String query = "select r from registrologacesso"
-				     + "where r.codigo = " + httpErro + " and " 
-             + versao.getSistema().getId() + " = r.sistema_id";
+		String query = "select r from registrologacesso r"
+				     + "where r.codigo = :httpErro and " 
+                     + ":sistemaId = r.sistema_id";
 		
 		q = PersistenceManager.getInstance().createQuery(query);
 		dados[0] = q.getMaxResults();
 		
-		query = "select r from registrologacesso"
-				     + "where r.codigo = " + httpOk + " and " 
-             + versao.getSistema().getId() + " = r.sistema_id";
+		query = "select r from registrologacesso r"
+		      + "where r.codigo = :httpOk and " 
+              + ":sistemaId = r.sistema_id";
 		
 		q = PersistenceManager.getInstance().createQuery(query);
 		dados[1] = q.getMaxResults();
 		
-		/*try {
-			RConnection c = new RConnection();
-			c.assign("dados", dados);
-			c.eval("png(tf1 <- tempfile(fileext = '.png'))");
-			c.eval("plot(dados)"); 
-			c.eval("dev.off()");c.eval("library(RCurl)");c.eval("txt<- base64Encode(readBin(tf1, 'raw', file.info(tf1)[1, 'size']), 'txt')");
-			String img = c.eval("sprintf('<img src=\"data:image/png;base64,%s\">', txt)").asString();
-			//Passar o grafico para a jsp
-			c.close();
-
-		} catch (RserveException e) {
-			e.printStackTrace();
-		} catch(REngineException e){
-			e.printStackTrace();
-		}*/
+		q.setParameter("htppErro", httpErro);
+		q.setParameter("sistemaId", sistemaId);
+		q.setParameter("httpOk", httpOk);
 	}
 }
