@@ -27,7 +27,7 @@ public class PadraoURLServices {
 	}
 	
 	/**
-	 * Recebe o nome de um padrão de URL e retorna um objeto do tipo PadraoURL caso ele exista ou null
+	 * Recebe o nome de um padrão de URL e retorna um objeto do tipo PadraoURL caso ele exista ou null caso ele não exista
 	 * @param padrao
 	 * @return PadraoURL
 	 */
