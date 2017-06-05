@@ -6,6 +6,8 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 
+import br.cefetrj.webdep.view.command.RelacaoAcessoFalhasChartCommand;
+
 public class RelacaoAcessoFalhasTag extends SimpleTagSupport{
 	private int largura;
 	private int altura;
@@ -40,7 +42,7 @@ public class RelacaoAcessoFalhasTag extends SimpleTagSupport{
 	
 	public void doTag() throws JspException, IOException {
 		JspWriter out = getJspContext().getOut();
-		//Escrever a html que vai exibir o gráfico
-		//Usar o método buscarGráfico da classe RelacaoAcessoFalhasChartCommand
+		out.print(RelacaoAcessoFalhasChartCommand.buscarGrafico(dados));
+		out.print(" width = " + largura + " height = " + altura + " />");
 	}
 }
